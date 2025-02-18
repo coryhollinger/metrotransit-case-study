@@ -1,10 +1,11 @@
 {
-  "name": "nexttrip-case-study",
+  "name": "metrotransit-case-study",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 127.0.0.1",
+    "cypress": "cypress open",
     "test": "vitest",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -33,6 +34,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/browser": "^3.0.6",
     "axios-mock-adapter": "^2.1.0",
+    "cypress": "^14.0.3",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
