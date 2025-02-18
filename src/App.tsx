@@ -19,7 +19,9 @@ function App() {
     <>
       <BrowserRouter>
         <ErrorBoundary
-          FallbackComponent={() => <div>Something went wrong</div>}
+          FallbackComponent={() => (
+            <div>Oops! Something went wrong. Try reloading the page.</div>
+          )}
         >
           <AppContext.Provider value={{ appState, setAppState }}>
             <Header />
