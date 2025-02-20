@@ -79,6 +79,10 @@ const RoutePicker = () => {
                           routeName: route.route_label,
                         };
                       });
+                      sessionStorage.setItem(
+                        `routeName-${route.route_id}`,
+                        route.route_label
+                      );
                       navigate(`/${route.route_id}`);
                     }}
                     buttonText={route.route_label}

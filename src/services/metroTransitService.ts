@@ -14,7 +14,6 @@ const getRoutes = async (): Promise<RouteResponse[]> => {
   if (response.status !== 200) {
     throw new Error("Failed to fetch routes");
   }
-  console.log(response.cached);
   return response.data;
 };
 
@@ -23,7 +22,6 @@ const getDirections = async (route: string): Promise<DirectionResponse[]> => {
   if (response.status !== 200) {
     throw new Error("Failed to fetch directions");
   }
-  console.log(response.cached);
 
   return response.data;
 };
@@ -36,7 +34,6 @@ const getStops = async (
   if (response.status !== 200) {
     throw new Error("Failed to fetch stops");
   }
-  console.log(response.cached);
 
   return response.data;
 };

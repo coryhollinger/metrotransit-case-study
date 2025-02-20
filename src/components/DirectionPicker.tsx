@@ -3,7 +3,7 @@ import PickerItem from "./PickerItem";
 import useGetDirections from "../hooks/useGetDirections";
 import ListWithLoadingSpinner from "./ListWithLoadingSpinner";
 import { Typography } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AppContext from "../contexts/AppContext";
 import ErrorMessage from "./ErrorMessage";
 
@@ -12,6 +12,18 @@ const DirectionPicker = () => {
   const { appState, setAppState } = useContext(AppContext);
   const { isLoading, error, data } = useGetDirections(routeId || "");
   const navigate = useNavigate();
+
+  // Load route name from sessionstorage if page is refreshed
+  useEffect(() => {
+    if (!appState.routeName) {
+      setAppState((prevState) => {
+        return {
+          ...prevState,
+          routeName: sessionStorage.getItem(`routeName-${routeId}`) || "",
+        };
+      });
+    }
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -33,6 +45,10 @@ const DirectionPicker = () => {
                       directionName: direction.direction_name,
                     };
                   });
+                  sessionStorage.setItem(
+                    `directionName-${routeId}-${direction.direction_id}`,
+                    direction.direction_name
+                  );
                   navigate(`/results/${routeId}/${direction.direction_id}`);
                 }}
                 buttonText={direction.direction_name}
