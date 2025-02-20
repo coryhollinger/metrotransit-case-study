@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router";
+import { screen } from "@testing-library/react";
+import { Route, Routes } from "react-router";
 import { MockedFunction } from "vitest";
-import AppContext from "../../contexts/AppContext";
 import DirectionPicker from "../DirectionPicker";
 import useGetDirections from "../../hooks/useGetDirections";
+import { renderWithMemoryRouter } from "../../../testUtils";
 
 vi.mock("../../hooks/useGetDirections");
 
@@ -29,11 +29,7 @@ describe("DirectionPicker", () => {
       error: null,
       data: [],
     });
-    render(
-      <MemoryRouter>
-        <DirectionPicker />
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<DirectionPicker />);
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
@@ -43,11 +39,8 @@ describe("DirectionPicker", () => {
       error: "Error",
       data: [],
     });
-    render(
-      <MemoryRouter>
-        <DirectionPicker />
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<DirectionPicker />);
+
     expect(screen.getByText("Error")).toBeInTheDocument();
   });
 
@@ -57,63 +50,46 @@ describe("DirectionPicker", () => {
       error: null,
       data: [{ direction_id: 1, direction_name: "North" }],
     });
-    render(
-      <MemoryRouter initialEntries={["/1"]}>
-        <Routes>
-          <Route path="/:routeId" element={<DirectionPicker />} />
-        </Routes>
-      </MemoryRouter>
+    renderWithMemoryRouter(
+      <Routes>
+        <Route path="/:routeId" element={<DirectionPicker />} />
+      </Routes>,
+      { initialEntries: ["/1"] }
     );
     expect(mockUseGetDirections).toHaveBeenCalledWith("1");
     expect(screen.getByText("North")).toBeInTheDocument();
   });
 
-  it("correctly displays from app state", () => {
+  it("correctly displays from search params", () => {
     mockUseGetDirections.mockReturnValue({
       isLoading: false,
       error: null,
       data: [{ direction_id: 1, direction_name: "North" }],
     });
-    render(
-      <MemoryRouter>
-        <AppContext.Provider
-          value={{
-            appState: { routeName: "Route 1", directionName: "" },
-            setAppState: vi.fn(),
-          }}
-        >
-          <DirectionPicker />
-        </AppContext.Provider>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<DirectionPicker />, {
+      initialEntries: ["/1?route=Route 1"],
+    });
     expect(screen.getByText("Route 1: Choose a Direction")).toBeInTheDocument();
   });
 
-  it("correctly updates app state and nvaigates when clicked", () => {
+  it("correctly updates search params and navigates when clicked", () => {
     mockUseGetDirections.mockReturnValue({
       isLoading: false,
       error: null,
       data: [{ direction_id: 1, direction_name: "North" }],
     });
-    const mockSetAppState = vi.fn();
 
-    const baseState = {
-      appState: { routeName: "Route 1", directionName: "" },
-      setAppState: mockSetAppState,
-    };
-
-    render(
-      <MemoryRouter initialEntries={["/1"]}>
-        <AppContext.Provider value={baseState}>
-          <Routes>
-            <Route path="/:routeId" element={<DirectionPicker />} />
-          </Routes>
-        </AppContext.Provider>
-      </MemoryRouter>
+    renderWithMemoryRouter(
+      <Routes>
+        <Route path="/:routeId" element={<DirectionPicker />} />
+      </Routes>,
+      { initialEntries: ["/1?route=Route 1"] }
     );
     const button = screen.getByRole("button");
     button.click();
-    expect(mockSetAppState).toHaveBeenCalled();
-    expect(mockedUseNavigate).toHaveBeenCalledWith("/results/1/1");
+    expect(mockedUseNavigate).toHaveBeenCalledWith({
+      pathname: "/results/1/1",
+      search: "?route=Route 1&direction=North",
+    });
   });
 });

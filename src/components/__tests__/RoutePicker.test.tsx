@@ -1,9 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import RoutePicker from "../RoutePicker";
 import useGetRoutes from "../../hooks/useGetRoutes";
 import { MockedFunction } from "vitest";
-import { MemoryRouter } from "react-router";
-import AppContext from "../../contexts/AppContext";
+import { renderWithMemoryRouter } from "../../../testUtils";
 
 const mockedUseNavigate = vi.fn();
 
@@ -26,11 +25,7 @@ describe("RoutePicker Component", () => {
       isLoading: false,
       error: null,
     });
-    render(
-      <MemoryRouter>
-        <RoutePicker />
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByTestId("route-picker")).toBeInTheDocument();
   });
 
@@ -40,11 +35,7 @@ describe("RoutePicker Component", () => {
       isLoading: true,
       error: null,
     });
-    render(
-      <MemoryRouter>
-        <RoutePicker />
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
@@ -54,11 +45,7 @@ describe("RoutePicker Component", () => {
       isLoading: false,
       error: null,
     });
-    render(
-      <MemoryRouter>
-        <RoutePicker />
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByText("Route 1")).toBeInTheDocument();
   });
 
@@ -68,37 +55,23 @@ describe("RoutePicker Component", () => {
       isLoading: false,
       error: "Whoops! Something went wrong.",
     });
-    render(
-      <MemoryRouter>
-        <RoutePicker />
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByTestId("error-message")).toBeInTheDocument();
   });
 
-  it("should update state and change route when a bus route is clicked", () => {
+  it("should change route when a bus route is clicked", () => {
     mockUseGetRoutes.mockReturnValue({
       data: [{ route_label: "Route 1", route_id: "1" }],
       isLoading: false,
       error: null,
     });
 
-    const mockedSetAppState = vi.fn();
-    const baseSate = {
-      appState: { routeName: "", directionName: "" },
-      setAppState: mockedSetAppState,
-    };
-
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <AppContext.Provider value={baseSate}>
-          <RoutePicker />
-        </AppContext.Provider>
-      </MemoryRouter>
-    );
+    renderWithMemoryRouter(<RoutePicker />, { initialEntries: ["/"] });
     const button = screen.getByRole("button");
     button.click();
-    expect(mockedUseNavigate).toHaveBeenCalledWith("/1");
-    expect(mockedSetAppState).toHaveBeenCalled();
+    expect(mockedUseNavigate).toHaveBeenCalledWith({
+      pathname: "/1",
+      search: "?route=Route 1",
+    });
   });
 });

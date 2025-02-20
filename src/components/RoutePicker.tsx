@@ -8,14 +8,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import AppContext from "../contexts/AppContext";
 import ErrorMessage from "./ErrorMessage";
 
 const RoutePicker = () => {
   const { isLoading, error, data } = useGetRoutes();
-  const { setAppState } = useContext(AppContext);
   const [routeFilter, setRouteFilter] = useState("");
   const navigate = useNavigate();
 
@@ -73,17 +71,10 @@ const RoutePicker = () => {
                   <PickerItem
                     key={route.route_id}
                     handleClick={() => {
-                      setAppState((prevState) => {
-                        return {
-                          ...prevState,
-                          routeName: route.route_label,
-                        };
+                      navigate({
+                        pathname: `/${route.route_id}`,
+                        search: `?route=${route.route_label}`,
                       });
-                      sessionStorage.setItem(
-                        `routeName-${route.route_id}`,
-                        route.route_label
-                      );
-                      navigate(`/${route.route_id}`);
                     }}
                     buttonText={route.route_label}
                   />
