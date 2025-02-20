@@ -20,5 +20,7 @@ Node v22.13.1
 
 ## Assumptions
 
-1. I will not have to support legacy browsers
+1. I will not have to support legacy browsers.
 1. The default styling & theme is okay. I focused on functionality over beauty, but still kept usability and accessibility in mind.
+1. Material UI will handle most of the accessiblity attributes for me. I did not test for accessibility.
+1. The data from the API will not change often, allowing for client-side caching.

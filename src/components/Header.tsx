@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <>
       <AppBar position="static" data-testid="header">
-        <Toolbar>
+        <Toolbar sx={{ background: "#1976d2" }}>
           <Box
             component="img"
             sx={{
@@ -22,18 +22,14 @@ const Header = () => {
           />
           <Typography
             sx={{ flexGrow: 1, textAlign: "center", overflow: "visible" }}
-            variant="h6"
+            variant="h5"
             noWrap
             component="div"
           >
             Metro Transit NexTrip
           </Typography>
           {pathname !== "/" && (
-            <Button
-              sx={{ display: { xs: "none", sm: "block" } }}
-              variant="contained"
-              onClick={() => navigate("/")}
-            >
+            <Button variant="contained" onClick={() => navigate("/")}>
               <RestartAltIcon />
             </Button>
           )}
