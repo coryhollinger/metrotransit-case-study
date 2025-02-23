@@ -2,6 +2,7 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import logo from "../assets/metrotransit-logo.png";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { HEADER_TITLE } from "../strings";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Header = () => {
             noWrap
             component="div"
           >
-            Metro Transit NexTrip
+            {HEADER_TITLE}
           </Typography>
           {pathname !== "/" && (
             <Button variant="contained" onClick={() => navigate("/")}>

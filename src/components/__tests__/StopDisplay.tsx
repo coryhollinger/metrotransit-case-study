@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { MockedFunction } from "vitest";
-import SearchResults from "../SearchResults";
+import SearchResults from "../StopDisplay";
 import useGetStops from "../../hooks/useGetStops";
 import { renderWithMemoryRouter } from "../../../testUtils";
 

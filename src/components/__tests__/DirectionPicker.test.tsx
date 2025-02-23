@@ -52,9 +52,9 @@ describe("DirectionPicker", () => {
     });
     renderWithMemoryRouter(
       <Routes>
-        <Route path="/:routeId" element={<DirectionPicker />} />
+        <Route path="search/:routeId" element={<DirectionPicker />} />
       </Routes>,
-      { initialEntries: ["/1"] }
+      { initialEntries: ["/search/1"] }
     );
     expect(mockUseGetDirections).toHaveBeenCalledWith("1");
     expect(screen.getByText("North")).toBeInTheDocument();
@@ -67,9 +67,9 @@ describe("DirectionPicker", () => {
       data: [{ direction_id: 1, direction_name: "North" }],
     });
     renderWithMemoryRouter(<DirectionPicker />, {
-      initialEntries: ["/1?route=Route 1"],
+      initialEntries: ["/search/1?route=Route 1"],
     });
-    expect(screen.getByText("Route 1: Choose a Direction")).toBeInTheDocument();
+    expect(screen.getByText("Route 1: Choose A Direction")).toBeInTheDocument();
   });
 
   it("correctly updates search params and navigates when clicked", () => {
@@ -81,14 +81,14 @@ describe("DirectionPicker", () => {
 
     renderWithMemoryRouter(
       <Routes>
-        <Route path="/:routeId" element={<DirectionPicker />} />
+        <Route path="search/:routeId" element={<DirectionPicker />} />
       </Routes>,
-      { initialEntries: ["/1?route=Route 1"] }
+      { initialEntries: ["/search/1?route=Route 1"] }
     );
     const button = screen.getByRole("button");
     button.click();
     expect(mockedUseNavigate).toHaveBeenCalledWith({
-      pathname: "/results/1/1",
+      pathname: "/search/1/1",
       search: "?route=Route 1&direction=North",
     });
   });

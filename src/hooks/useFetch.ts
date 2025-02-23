@@ -13,7 +13,7 @@ const useFetch = <T extends object>(
   defaultValue: T
 ) => {
   const [data, setData] = useState<T>(defaultValue);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {

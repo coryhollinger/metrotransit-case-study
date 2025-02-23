@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { getStops } from "../services/metroTransitService";
 import useFetch from "./useFetch";
+import { FETCH_ERROR_TEMPLATE } from "../strings";
 
 /**
  * A convenience hook that fetches stops for a given route ID and direction.
@@ -17,7 +18,7 @@ const useGetStops = (routeId: string, direction: string) => {
   const { isLoading, isError, data } = useFetch(fetchCallback, []);
 
   const error = isError
-    ? `Could not fetch stops. Please try reloading the page.`
+    ? FETCH_ERROR_TEMPLATE("stops")
     : null;
 
   return { isLoading, error, data };

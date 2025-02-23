@@ -4,3 +4,14 @@
   padding: 1rem;
   text-align: center;
 }
+
+/* Prevent scroll on body; let components handle it */
+html,
+body {
+  overflow: hidden;
+}
+
+.displayList {
+  overflow: "scroll";
+  max-height: "80vh"
+}

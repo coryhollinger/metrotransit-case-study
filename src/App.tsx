@@ -3,29 +3,30 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 import RoutePicker from "./components/RoutePicker";
 import DirectionPicker from "./components/DirectionPicker";
-import SearchResults from "./components/SearchResults";
+import SearchResults from "./components/StopDisplay";
 import Header from "./components/Header";
 import { ErrorBoundary } from "react-error-boundary";
+import { ERROR_BOUNDARY_MESSAGE } from "./strings";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <ErrorBoundary
-          FallbackComponent={() => (
-            <div>Oops! Something went wrong. Try reloading the page.</div>
-          )}
+          FallbackComponent={() => <div>{ERROR_BOUNDARY_MESSAGE}</div>}
         >
           <Header />
           <Routes>
             <Route path="/">
               <Route index element={<RoutePicker />} />
-              <Route path=":routeId" element={<DirectionPicker />} />
+              <Route path="search/:routeId" element={<DirectionPicker />} />
             </Route>
             <Route
-              path="results/:routeId/:direction"
+              path="search/:routeId/:direction"
               element={<SearchResults />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
       </BrowserRouter>

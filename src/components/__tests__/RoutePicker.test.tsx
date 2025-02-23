@@ -70,7 +70,7 @@ describe("RoutePicker Component", () => {
     const button = screen.getByRole("button");
     button.click();
     expect(mockedUseNavigate).toHaveBeenCalledWith({
-      pathname: "/1",
+      pathname: "/search/1",
       search: "?route=Route 1",
     });
   });

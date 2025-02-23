@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { getRoutes } from "../services/metroTransitService";
 import useFetch from "./useFetch";
+import { FETCH_ERROR_TEMPLATE } from "../strings";
 
 /**
  * A convenience hook that fetches routes.
@@ -14,9 +15,7 @@ const useGetRoutes = () => {
 
   const { isLoading, isError, data } = useFetch(fetchCallback, []);
 
-  const error = isError
-    ? `Could not fetch routes. Please try reloading the page.`
-    : null;
+  const error = isError ? FETCH_ERROR_TEMPLATE("routes") : null;
 
   return { isLoading, error, data };
 };

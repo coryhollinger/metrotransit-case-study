@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { getDirections } from "../services/metroTransitService";
 import useFetch from "./useFetch";
+import { FETCH_ERROR_TEMPLATE } from "../strings";
 
 /**
  * A convenience hook that fetches directions for a given route ID.
@@ -15,9 +16,7 @@ const useGetDirections = (routeId: string) => {
 
   const { isLoading, isError, data } = useFetch(fetchCallback, []);
 
-  const error = isError
-    ? `Could not fetch directions. Please try reloading the page.`
-    : null;
+  const error = isError ? FETCH_ERROR_TEMPLATE("directions") : null;
 
   return { isLoading, error, data };
 };
