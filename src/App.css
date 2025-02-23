@@ -12,6 +12,6 @@ body {
 }
 
 .displayList {
-  overflow: "scroll";
-  max-height: "80vh"
+  overflow: scroll;
+    max-height: 80vh;
 }

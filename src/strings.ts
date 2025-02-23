@@ -9,6 +9,7 @@ const FETCH_ERROR_TEMPLATE = (endpoint: Endpoint) =>
 const DIRECTION_PICKER_HEADER = "Choose A Direction";
 const SEARCH_RESULTS_HEADER = "Stops";
 const ERROR_BOUNDARY_MESSAGE = "Oops! Something went wrong. Please try again.";
+const NOT_FOUND_TEXT = "Page not found. Please try starting over.";
 
 export {
   HEADER_TITLE,
@@ -18,4 +19,5 @@ export {
   DIRECTION_PICKER_HEADER,
   SEARCH_RESULTS_HEADER,
   ERROR_BOUNDARY_MESSAGE,
+  NOT_FOUND_TEXT,
 };

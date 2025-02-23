@@ -1,9 +1,11 @@
+import { Typography } from "@mui/material";
+import { NOT_FOUND_TEXT } from "../strings";
+
 const NotFound = () => {
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>404</h1>
-      <p>Page Not Found</p>
-    </div>
+    <Typography variant="h2" sx={{ m: 5 }}>
+      {NOT_FOUND_TEXT}
+    </Typography>
   );
 };
 
