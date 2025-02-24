@@ -14,8 +14,8 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-describe("useGetStops", () => {
-  it("calls useFetch with correct params", () => {
+describe("useGetStops", async () => {
+  it("calls useFetch with correct params", async () => {
     const mockData = [{ place_code: "1", description: "Main St" }];
     mockedGetStops.mockReturnValue(
       new Promise<StopResponse[]>((resolve) => {
@@ -28,10 +28,10 @@ describe("useGetStops", () => {
     const { result } = renderHook(() => useGetStops(routeId, directionId));
     expect(result.current.isLoading).toBe(true);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual(mockData);
-      expect(mockedGetStops).toHaveBeenCalledWith(routeId);
+      expect(mockedGetStops).toHaveBeenCalledWith(routeId, directionId);
     });
   });
 });

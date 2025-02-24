@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 describe("useGetDirections", () => {
-  it("calls useFetch with correct params", () => {
+  it("calls useFetch with correct params", async () => {
     const mockData = [{ direction_id: 1, direction_name: "North" }];
     mockedGetDirections.mockReturnValue(
       new Promise<DirectionResponse[]>((resolve) => {
@@ -30,7 +30,7 @@ describe("useGetDirections", () => {
 
     expect(result.current.isLoading).toBe(true);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual(mockData);
       expect(mockedGetDirections).toHaveBeenCalledWith(routeId);

@@ -15,8 +15,8 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-describe("useGetRoutes", () => {
-  it("calls getRoutes correctly", () => {
+describe("useGetRoutes", async () => {
+  it("calls getRoutes correctly", async () => {
     const mockData = [{ route_label: "Route 1", route_id: "1" }];
     mockedGetRoutes.mockReturnValue(
       new Promise<RouteResponse[]>((resolve) => {
@@ -27,7 +27,7 @@ describe("useGetRoutes", () => {
     const { result } = renderHook(() => useGetRoutes());
     expect(result.current.isLoading).toBe(true);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual(mockData);
       expect(mockedGetRoutes).toHaveBeenCalled();

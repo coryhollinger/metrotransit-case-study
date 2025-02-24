@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 describe("useGetNextDeparture", () => {
-  it("calls useFetch with correct params", () => {
+  it("calls useFetch with correct params", async () => {
     const mockData: NexTripResponse = {
       departures: [
         {
@@ -40,10 +40,14 @@ describe("useGetNextDeparture", () => {
     );
     expect(result.current.isLoading).toBe(true);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.data).toEqual(mockData);
-      expect(mockedGetNextDeparture).toHaveBeenCalledWith(routeId);
+      expect(mockedGetNextDeparture).toHaveBeenCalledWith(
+        routeId,
+        directionId,
+        stopId
+      );
     });
   });
 });

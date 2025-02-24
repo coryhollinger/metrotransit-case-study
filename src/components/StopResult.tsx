@@ -28,9 +28,7 @@ const StopResult = ({
           error
             ? "Could not determine next departure"
             : departures.length > 0
-            ? `Next Departure: ${new Date(
-                departures[0].departure_time * 1000
-              ).toLocaleTimeString()}`
+            ? `Next Departure: ${departures[0].departure_text}`
             : "No departures at this time"
         }
         slotProps={{
