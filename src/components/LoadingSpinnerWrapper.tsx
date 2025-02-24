@@ -15,7 +15,7 @@ const LoadingSpinnerWrapper = ({
           }}
           unmountOnExit
         >
-          <CircularProgress />
+          <CircularProgress sx={{ m: 3 }} />
         </Fade>
       ) : (
         children
