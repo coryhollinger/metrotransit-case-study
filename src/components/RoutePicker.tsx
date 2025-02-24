@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { useState, useMemo } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { ROUTE_PICKER_FILTER_LABEL, ROUTE_PICKER_HEADER } from "../strings";
 import LoadingSpinnerWrapper from "./LoadingSpinnerWrapper";
 
 const RoutePicker = () => {
@@ -41,7 +40,7 @@ const RoutePicker = () => {
   return (
     <>
       <Typography variant="h3" component="div" sx={{ m: 5 }}>
-        {ROUTE_PICKER_HEADER}
+        Choose A Route
       </Typography>
       <TextField
         fullWidth
@@ -49,7 +48,7 @@ const RoutePicker = () => {
         value={routeFilter}
         onChange={handleFilterChange}
         onKeyUp={handleKeyPress}
-        label={ROUTE_PICKER_FILTER_LABEL}
+        label={"Filter Routes"}
         slotProps={{
           input: {
             startAdornment: (

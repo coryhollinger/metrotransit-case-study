@@ -2,7 +2,6 @@ import { useParams, useSearchParams } from "react-router";
 import { List, Typography } from "@mui/material";
 import useGetStops from "../hooks/useGetStops";
 import LoadingSpinnerWrapper from "./LoadingSpinnerWrapper";
-import { SEARCH_RESULTS_HEADER } from "../strings";
 import StopResult from "./StopResult";
 import { Suspense } from "react";
 
@@ -18,7 +17,7 @@ const SearchResults = () => {
       <Typography variant="h3" component="div" sx={{ m: 5 }}>
         {routeName && `${routeName} `}
         {directionName && `${directionName} `}
-        {SEARCH_RESULTS_HEADER}
+        Stops
       </Typography>
 
       <Suspense fallback={<LoadingSpinnerWrapper isLoading={true} />}>

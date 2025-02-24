@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { ERROR_BOUNDARY_MESSAGE } from "../strings";
 
 const ErrorMessage = ({ error }: { error: Error }) => {
   return (
@@ -10,7 +9,9 @@ const ErrorMessage = ({ error }: { error: Error }) => {
     >
       <Typography variant="h4">
         <ErrorOutlineIcon fontSize="large" sx={{ mr: 1 }} />
-        {error ? error.message : ERROR_BOUNDARY_MESSAGE}
+        {error
+          ? error.message
+          : "Oops! Something went wrong. Please try again."}
       </Typography>
     </Box>
   );

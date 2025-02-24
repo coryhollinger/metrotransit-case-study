@@ -3,7 +3,6 @@ import PickerItem from "./PickerItem";
 import useGetDirections from "../hooks/useGetDirections";
 import { List, Typography } from "@mui/material";
 import LoadingSpinnerWrapper from "./LoadingSpinnerWrapper";
-import { DIRECTION_PICKER_HEADER } from "../strings";
 
 const DirectionPicker = () => {
   const { routeId } = useParams();
@@ -15,7 +14,7 @@ const DirectionPicker = () => {
   return (
     <LoadingSpinnerWrapper isLoading={isLoading}>
       <Typography variant="h3" component="div" sx={{ m: 5 }}>
-        {`${routeName ? `${routeName}: ` : ""}${DIRECTION_PICKER_HEADER}`}
+        {routeName ? `${routeName}: ` : ""}Choose A Direction
       </Typography>
       <List className="displayList">
         {data.map((direction) => (

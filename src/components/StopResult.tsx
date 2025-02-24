@@ -1,11 +1,6 @@
 import { ListItem, ListItemText } from "@mui/material";
 import { StopResponse } from "../models";
 import useGetNextDeparture from "../hooks/useGetNextDeparture";
-import {
-  NEXT_DEPARTURE_LABEL,
-  NEXT_DEPARTURE_ERROR_TEXT,
-  NEXT_DEPARTURE_NONE_FOUND,
-} from "../strings";
 
 const StopResult = ({
   routeId,
@@ -31,12 +26,12 @@ const StopResult = ({
         primary={description}
         secondary={
           error
-            ? NEXT_DEPARTURE_ERROR_TEXT
+            ? "Could not determine next departure"
             : departures.length > 0
-            ? `${NEXT_DEPARTURE_LABEL}: ${new Date(
+            ? `Next Departure: ${new Date(
                 departures[0].departure_time * 1000
               ).toLocaleTimeString()}`
-            : NEXT_DEPARTURE_NONE_FOUND
+            : "No departures at this time"
         }
         slotProps={{
           secondary: isLoading ? { sx: { filter: "blur(2px)" } } : {},

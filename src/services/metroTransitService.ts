@@ -49,7 +49,8 @@ const getNextDeparture = async (
   placeCode: string
 ): Promise<NexTripResponse> => {
   const response = await metroTransitAxios.get(
-    `/${route}/${direction}/${placeCode}`
+    `/${route}/${direction}/${placeCode}`,
+    { cache: false }
   );
   if (response.status !== 200) {
     throw new Error("Failed to fetch stops");
