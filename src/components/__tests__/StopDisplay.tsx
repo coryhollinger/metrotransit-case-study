@@ -17,7 +17,6 @@ describe("SearchResults Component", () => {
     mockedUseGetStops.mockReturnValue({
       data: [],
       isLoading: false,
-      error: null,
     });
     renderWithMemoryRouter(<SearchResults />);
     expect(screen.getByRole("list")).toBeInTheDocument();
@@ -27,7 +26,6 @@ describe("SearchResults Component", () => {
     mockedUseGetStops.mockReturnValue({
       data: [{ description: "Stop 1", place_code: "1" }],
       isLoading: false,
-      error: null,
     });
     renderWithMemoryRouter(<SearchResults />);
     expect(screen.getAllByRole("listitem")).toHaveLength(1);
@@ -37,7 +35,6 @@ describe("SearchResults Component", () => {
     mockedUseGetStops.mockReturnValue({
       data: [{ description: "Stop 1", place_code: "1" }],
       isLoading: true,
-      error: null,
     });
     renderWithMemoryRouter(<SearchResults />);
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
@@ -46,7 +43,6 @@ describe("SearchResults Component", () => {
   it("correctly displays from search params", () => {
     mockedUseGetStops.mockReturnValue({
       isLoading: false,
-      error: null,
       data: [{ description: "Stop 1", place_code: "1" }],
     });
 

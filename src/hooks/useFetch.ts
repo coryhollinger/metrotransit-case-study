@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { metroTransitAxios } from "../services/metroTransitService";
+import { resetCache } from "../services/metroTransitService";
 
 /**
  * A custom hook that fetches data from an API and handles loading and error states.
@@ -14,19 +14,22 @@ const useFetch = <T extends object>(
 ) => {
   const [data, setData] = useState<T>(defaultValue);
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState<Error>();
 
   useEffect(() => {
     const internalFetch = async () => {
       setIsLoading(true);
       try {
         setData(await fetchFunc());
-      } catch {
-        setIsError(true);
-        // Nuke the cache to try to fix. Apparently clear can be undefined, so check first.
-        if (metroTransitAxios.storage.clear) {
-          await metroTransitAxios.storage.clear();
+      } catch (e) {
+        // Return the error to let the calling hooks handle it
+        if (e instanceof Error) {
+          setError(e);
+        } else {
+          setError(new Error("An error occurred while fetching data."));
         }
+        // Nuke the cache to try to fix
+        resetCache();
       }
       setIsLoading(false);
     };
@@ -34,7 +37,7 @@ const useFetch = <T extends object>(
     internalFetch();
   }, [fetchFunc]);
 
-  return { isLoading, isError, data };
+  return { isLoading, error, data };
 };
 
 export default useFetch;

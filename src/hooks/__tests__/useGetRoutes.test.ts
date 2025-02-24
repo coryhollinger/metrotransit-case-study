@@ -8,6 +8,7 @@ const mockedGetRoutes = getRoutes as MockedFunction<typeof getRoutes>;
 
 vi.mock("../../services/metroTransitService", () => ({
   getRoutes: vi.fn(),
+  resetCache: vi.fn(),
 }));
 
 beforeEach(() => {

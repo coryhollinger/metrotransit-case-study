@@ -17,7 +17,7 @@ export interface NexTripResponse {
   departures: Departure[];
 }
 
-interface Departure {
+export interface Departure {
   departure_time: number;
   departure_text: string;
 }

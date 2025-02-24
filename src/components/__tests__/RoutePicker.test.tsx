@@ -23,7 +23,6 @@ describe("RoutePicker Component", () => {
     mockUseGetRoutes.mockReturnValue({
       data: [{ route_label: "Route 1", route_id: "1" }],
       isLoading: false,
-      error: null,
     });
     renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByTestId("route-picker")).toBeInTheDocument();
@@ -33,7 +32,6 @@ describe("RoutePicker Component", () => {
     mockUseGetRoutes.mockReturnValue({
       data: [{ route_label: "Route 1", route_id: "1" }],
       isLoading: true,
-      error: null,
     });
     renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
@@ -43,27 +41,15 @@ describe("RoutePicker Component", () => {
     mockUseGetRoutes.mockReturnValue({
       data: [{ route_label: "Route 1", route_id: "1" }],
       isLoading: false,
-      error: null,
     });
     renderWithMemoryRouter(<RoutePicker />);
     expect(screen.getByText("Route 1")).toBeInTheDocument();
-  });
-
-  it("should display an error when present", () => {
-    mockUseGetRoutes.mockReturnValue({
-      data: [{ route_label: "Route 1", route_id: "1" }],
-      isLoading: false,
-      error: "Whoops! Something went wrong.",
-    });
-    renderWithMemoryRouter(<RoutePicker />);
-    expect(screen.getByTestId("error-message")).toBeInTheDocument();
   });
 
   it("should change route when a bus route is clicked", () => {
     mockUseGetRoutes.mockReturnValue({
       data: [{ route_label: "Route 1", route_id: "1" }],
       isLoading: false,
-      error: null,
     });
 
     renderWithMemoryRouter(<RoutePicker />, { initialEntries: ["/"] });

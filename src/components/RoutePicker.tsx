@@ -10,12 +10,11 @@ import {
 } from "@mui/material";
 import { useState, useMemo } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import ErrorMessage from "./ErrorMessage";
-import LoadingSpinnerWrapper from "./LoadingSpinnerWrapper";
 import { ROUTE_PICKER_FILTER_LABEL, ROUTE_PICKER_HEADER } from "../strings";
+import LoadingSpinnerWrapper from "./LoadingSpinnerWrapper";
 
 const RoutePicker = () => {
-  const { isLoading, error, data } = useGetRoutes();
+  const { isLoading, data } = useGetRoutes();
   const [routeFilter, setRouteFilter] = useState("");
   const navigate = useNavigate();
   const filteredRoutes = useMemo(
@@ -44,47 +43,41 @@ const RoutePicker = () => {
       <Typography variant="h3" component="div" sx={{ m: 5 }}>
         {ROUTE_PICKER_HEADER}
       </Typography>
-      {error ? (
-        <ErrorMessage error={error} />
-      ) : (
-        <>
-          <TextField
-            fullWidth
-            autoFocus
-            value={routeFilter}
-            onChange={handleFilterChange}
-            onKeyUp={handleKeyPress}
-            label={ROUTE_PICKER_FILTER_LABEL}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
-          <LoadingSpinnerWrapper isLoading={isLoading}>
-            <Container data-testid="route-picker">
-              <List className="displayList">
-                {filteredRoutes.map((route) => (
-                  <PickerItem
-                    key={route.route_id}
-                    handleClick={() => {
-                      navigate({
-                        pathname: `/search/${route.route_id}`,
-                        search: `?route=${route.route_label}`,
-                      });
-                    }}
-                    buttonText={route.route_label}
-                  />
-                ))}
-              </List>
-            </Container>
-          </LoadingSpinnerWrapper>
-        </>
-      )}
+      <TextField
+        fullWidth
+        autoFocus
+        value={routeFilter}
+        onChange={handleFilterChange}
+        onKeyUp={handleKeyPress}
+        label={ROUTE_PICKER_FILTER_LABEL}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          },
+        }}
+      />
+      <LoadingSpinnerWrapper isLoading={isLoading}>
+        <Container data-testid="route-picker">
+          <List className="displayList">
+            {filteredRoutes.map((route) => (
+              <PickerItem
+                key={route.route_id}
+                handleClick={() => {
+                  navigate({
+                    pathname: `/search/${route.route_id}`,
+                    search: `?route=${route.route_label}`,
+                  });
+                }}
+                buttonText={route.route_label}
+              />
+            ))}
+          </List>
+        </Container>
+      </LoadingSpinnerWrapper>
     </>
   );
 };

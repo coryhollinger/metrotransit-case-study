@@ -26,28 +26,15 @@ describe("DirectionPicker", () => {
   it("displays loading spinner when loading", () => {
     mockUseGetDirections.mockReturnValue({
       isLoading: true,
-      error: null,
       data: [],
     });
     renderWithMemoryRouter(<DirectionPicker />);
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
-  it("displays error message when there is an error", () => {
-    mockUseGetDirections.mockReturnValue({
-      isLoading: false,
-      error: "Error",
-      data: [],
-    });
-    renderWithMemoryRouter(<DirectionPicker />);
-
-    expect(screen.getByText("Error")).toBeInTheDocument();
-  });
-
   it("displays directions when data is available", () => {
     mockUseGetDirections.mockReturnValue({
       isLoading: false,
-      error: null,
       data: [{ direction_id: 1, direction_name: "North" }],
     });
     renderWithMemoryRouter(
@@ -63,7 +50,6 @@ describe("DirectionPicker", () => {
   it("correctly displays from search params", () => {
     mockUseGetDirections.mockReturnValue({
       isLoading: false,
-      error: null,
       data: [{ direction_id: 1, direction_name: "North" }],
     });
     renderWithMemoryRouter(<DirectionPicker />, {
@@ -75,7 +61,6 @@ describe("DirectionPicker", () => {
   it("correctly updates search params and navigates when clicked", () => {
     mockUseGetDirections.mockReturnValue({
       isLoading: false,
-      error: null,
       data: [{ direction_id: 1, direction_name: "North" }],
     });
 

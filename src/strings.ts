@@ -10,8 +10,8 @@ const DIRECTION_PICKER_HEADER = "Choose A Direction";
 const SEARCH_RESULTS_HEADER = "Stops";
 const ERROR_BOUNDARY_MESSAGE = "Oops! Something went wrong. Please try again.";
 const NOT_FOUND_TEXT = "Page not found. Please try starting over.";
-const NEXT_DEPARTURE_LABEL = "Next Departure";
 
+const NEXT_DEPARTURE_LABEL = "Next Departure";
 const NEXT_DEPARTURE_ERROR_TEXT = "Could not determine next departure";
 const NEXT_DEPARTURE_NONE_FOUND = "No departures at this time";
 

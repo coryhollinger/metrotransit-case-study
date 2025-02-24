@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import useFetch from "../useFetch";
 import { RouteResponse } from "../../models";
-import { metroTransitAxios } from "../../services/metroTransitService";
-import { MockedObject } from "vitest";
+import { resetCache } from "../../services/metroTransitService";
+import { MockedFunction } from "vitest";
 
 vi.mock("axios-cache-interceptor", () => ({
   setupCache: vi.fn().mockReturnValue({
@@ -13,9 +13,11 @@ vi.mock("axios-cache-interceptor", () => ({
   }),
 }));
 
-const mockedMetroTransitAxios = metroTransitAxios as MockedObject<
-  typeof metroTransitAxios
->;
+vi.mock("../../services/metroTransitService", () => ({
+  resetCache: vi.fn(),
+}));
+
+const mockedResetCache = resetCache as MockedFunction<typeof resetCache>;
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -32,8 +34,8 @@ describe("useFetch", () => {
     expect(result.current.isLoading).toBe(true);
 
     await waitFor(() => {
+      expect(result.current.error).toBeFalsy();
       expect(result.current.data).toEqual(mockData);
-      expect(result.current.isError).toBe(false);
       expect(result.current.isLoading).toBe(false);
     });
   });
@@ -48,9 +50,9 @@ describe("useFetch", () => {
     const { result } = renderHook(() => useFetch(mockFunc, []));
 
     await waitFor(() => {
-      expect(result.current.isError).toBe(true);
+      expect(result.current.error).toBeTruthy();
       expect(result.current.isLoading).toBe(false);
-      expect(mockedMetroTransitAxios.storage.clear).toHaveBeenCalled();
+      expect(mockedResetCache).toHaveBeenCalled();
     });
   });
 });

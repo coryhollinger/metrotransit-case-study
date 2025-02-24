@@ -58,10 +58,17 @@ const getNextDeparture = async (
   return response.data;
 };
 
+const resetCache = async () => {
+  if (metroTransitAxios.storage.clear) {
+    await metroTransitAxios.storage.clear();
+  }
+};
+
 export {
   getRoutes,
   getDirections,
   getStops,
   getNextDeparture,
+  resetCache,
   metroTransitAxios,
 };

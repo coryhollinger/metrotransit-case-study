@@ -1,8 +1,4 @@
-import {
-  ListItem,
-  listItemSecondaryActionClasses,
-  ListItemText,
-} from "@mui/material";
+import { ListItem, ListItemText } from "@mui/material";
 import { StopResponse } from "../models";
 import useGetNextDeparture from "../hooks/useGetNextDeparture";
 import {
@@ -21,7 +17,7 @@ const StopResult = ({
   stop: StopResponse;
 }) => {
   const { place_code, description } = stop;
-  const { isLoading, isError, data } = useGetNextDeparture(
+  const { isLoading, error, data } = useGetNextDeparture(
     routeId,
     directionId,
     place_code
@@ -34,7 +30,7 @@ const StopResult = ({
       <ListItemText
         primary={description}
         secondary={
-          isError
+          error
             ? NEXT_DEPARTURE_ERROR_TEXT
             : departures.length > 0
             ? `${NEXT_DEPARTURE_LABEL}: ${new Date(

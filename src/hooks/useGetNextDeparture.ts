@@ -20,11 +20,11 @@ const useGetNextDeparture = (
     return await getNextDeparture(routeId, direction, placeCode);
   }, [routeId, direction, placeCode]);
 
-  const { isLoading, isError, data } = useFetch(fetchCallback, {
+  const { isLoading, error, data } = useFetch(fetchCallback, {
     departures: [],
   });
 
-  return { isLoading, isError, data };
+  return { isLoading, error, data };
 };
 
 export default useGetNextDeparture;
