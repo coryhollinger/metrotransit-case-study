@@ -39,7 +39,7 @@ const StopResult = ({
             : NEXT_DEPARTURE_NONE_FOUND
         }
         slotProps={{
-          secondary: isLoading ? { sx: { filter: "blur(3px)" } } : {},
+          secondary: isLoading ? { sx: { filter: "blur(2px)" } } : {},
         }}
       />
     </ListItem>
