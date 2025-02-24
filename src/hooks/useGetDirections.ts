@@ -11,6 +11,9 @@ import { FETCH_ERROR_TEMPLATE } from "../strings";
  */
 const useGetDirections = (routeId: string) => {
   const fetchCallback = useCallback(async () => {
+    if (!routeId) {
+      throw new Error("Missing required parameters");
+    }
     return await getDirections(routeId);
   }, [routeId]);
 

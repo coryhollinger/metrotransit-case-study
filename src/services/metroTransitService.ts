@@ -1,6 +1,11 @@
 import Axios from "axios";
 import { setupCache } from "axios-cache-interceptor";
-import { RouteResponse, DirectionResponse, StopResponse } from "../models";
+import {
+  RouteResponse,
+  DirectionResponse,
+  StopResponse,
+  NexTripResponse,
+} from "../models";
 
 const instance = Axios.create({
   baseURL: "https://svc.metrotransit.org/nextrip",
@@ -38,4 +43,25 @@ const getStops = async (
   return response.data;
 };
 
-export { getRoutes, getDirections, getStops, metroTransitAxios };
+const getNextDeparture = async (
+  route: string,
+  direction: string,
+  placeCode: string
+): Promise<NexTripResponse> => {
+  const response = await metroTransitAxios.get(
+    `/${route}/${direction}/${placeCode}`
+  );
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch stops");
+  }
+
+  return response.data;
+};
+
+export {
+  getRoutes,
+  getDirections,
+  getStops,
+  getNextDeparture,
+  metroTransitAxios,
+};

@@ -25,7 +25,6 @@ describe("useFetch", () => {
   it("should return data when fetch is successful", async () => {
     const mockData = [{ route_label: "Route 1", route_id: "1" }];
     const mockFunc = (): Promise<RouteResponse[]> => {
-      console.log("Mock function called");
       return new Promise((resolve) => resolve(mockData));
     };
 

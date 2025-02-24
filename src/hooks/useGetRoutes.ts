@@ -10,6 +10,7 @@ import { FETCH_ERROR_TEMPLATE } from "../strings";
  */
 const useGetRoutes = () => {
   const fetchCallback = useCallback(async () => {
+    new Promise((resolve) => setTimeout(resolve, 5000));
     return await getRoutes();
   }, []);
 

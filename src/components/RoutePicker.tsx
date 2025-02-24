@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ErrorMessage from "./ErrorMessage";
 import LoadingSpinnerWrapper from "./LoadingSpinnerWrapper";
@@ -18,6 +18,13 @@ const RoutePicker = () => {
   const { isLoading, error, data } = useGetRoutes();
   const [routeFilter, setRouteFilter] = useState("");
   const navigate = useNavigate();
+  const filteredRoutes = useMemo(
+    () =>
+      data.filter((route) =>
+        route.route_label.toLowerCase().includes(routeFilter.toLowerCase())
+      ),
+    [data, routeFilter]
+  );
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRouteFilter(event.target.value);
@@ -26,10 +33,6 @@ const RoutePicker = () => {
   const handleKeyPress = (event: React.KeyboardEvent) => {
     // If exaclty one route matches the filter and the user presses Enter, use that route
     if (event.key === "Enter") {
-      const filteredRoutes = data.filter((route) =>
-        route.route_label.toLowerCase().includes(routeFilter.toLowerCase())
-      );
-
       if (filteredRoutes.length === 1) {
         navigate(`/${filteredRoutes[0].route_id}`);
       }
@@ -62,30 +65,24 @@ const RoutePicker = () => {
               },
             }}
           />
-          <Container data-testid="route-picker">
-            <LoadingSpinnerWrapper isLoading={isLoading}>
+          <LoadingSpinnerWrapper isLoading={isLoading}>
+            <Container data-testid="route-picker">
               <List className="displayList">
-                {data
-                  .filter((route) =>
-                    route.route_label
-                      .toLowerCase()
-                      .includes(routeFilter.toLowerCase())
-                  )
-                  .map((route) => (
-                    <PickerItem
-                      key={route.route_id}
-                      handleClick={() => {
-                        navigate({
-                          pathname: `/search/${route.route_id}`,
-                          search: `?route=${route.route_label}`,
-                        });
-                      }}
-                      buttonText={route.route_label}
-                    />
-                  ))}
+                {filteredRoutes.map((route) => (
+                  <PickerItem
+                    key={route.route_id}
+                    handleClick={() => {
+                      navigate({
+                        pathname: `/search/${route.route_id}`,
+                        search: `?route=${route.route_label}`,
+                      });
+                    }}
+                    buttonText={route.route_label}
+                  />
+                ))}
               </List>
-            </LoadingSpinnerWrapper>
-          </Container>
+            </Container>
+          </LoadingSpinnerWrapper>
         </>
       )}
     </>

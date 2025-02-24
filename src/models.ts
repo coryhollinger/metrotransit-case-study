@@ -12,3 +12,12 @@ export interface StopResponse {
   place_code: string;
   description: string;
 }
+
+export interface NexTripResponse {
+  departures: Departure[];
+}
+
+interface Departure {
+  departure_time: number;
+  departure_text: string;
+}

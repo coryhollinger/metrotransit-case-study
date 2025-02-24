@@ -13,7 +13,6 @@ const LoadingSpinnerWrapper = ({
           style={{
             transitionDelay: isLoading ? "500ms" : "0ms",
           }}
-          unmountOnExit
         >
           <CircularProgress sx={{ m: 3 }} />
         </Fade>
