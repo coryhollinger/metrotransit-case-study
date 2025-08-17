@@ -20,12 +20,11 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<RoutePicker />} />
-              <Route path="search/:routeId" element={<DirectionPicker />} />
             </Route>
-            <Route
-              path="search/:routeId/:direction"
-              element={<SearchResults />}
-            />
+            <Route path="search">
+              <Route path=":routeId" element={<DirectionPicker />} />
+              <Route path=":routeId/:direction" element={<SearchResults />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
